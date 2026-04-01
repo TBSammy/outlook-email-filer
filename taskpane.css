@@ -187,3 +187,10 @@ h1 {
   margin-bottom: 12px;
   word-break: break-word;
 }
+
+footer {
+  margin-top: 20px;
+  text-align: right;
+  font-size: 11px;
+  color: #a19f9d;
+}

@@ -1,6 +1,7 @@
 /* =====================================================
    Email Filer — Outlook Web Add-in
    Files the selected email as .eml to a SharePoint folder
+   v1.1.0
    ===================================================== */
 
 // === Configuration (not secrets — just public identifiers) ===
@@ -11,6 +12,7 @@ const CONFIG = {
   sitePath: "/sites/project-email-register",
   emailRecordsFolder: "Email Records",
   scopes: ["Files.ReadWrite", "Sites.Read.All"],
+  version: "1.1.0",
 };
 
 // === MSAL setup ===
@@ -21,12 +23,12 @@ const msalConfig = {
     redirectUri: window.location.origin + window.location.pathname,
   },
   cache: {
-    cacheLocation: "sessionStorage",
-    storeAuthStateInCookie: false,
+    cacheLocation: "memoryStorage",
   },
 };
 
 let msalClient = null;
+let msalReady = false;
 let accessToken = null;
 let siteId = null;
 let driveId = null;
@@ -41,6 +43,7 @@ let selectedFolderName = null;
 
 // === DOM references ===
 const statusText = document.getElementById("status-text");
+const versionText = document.getElementById("version-text");
 const loginSection = document.getElementById("login-section");
 const loginBtn = document.getElementById("login-btn");
 const folderSection = document.getElementById("folder-section");
@@ -59,19 +62,28 @@ const retryBtn = document.getElementById("retry-btn");
 
 // === Initialize ===
 Office.onReady(async function (info) {
+  versionText.textContent = "v" + CONFIG.version;
+
   if (info.host !== Office.HostType.Outlook) {
     statusText.textContent = "This add-in only works in Outlook.";
     return;
   }
 
-  msalClient = new msal.PublicClientApplication(msalConfig);
-  await msalClient.initialize();
+  try {
+    msalClient = new msal.PublicClientApplication(msalConfig);
+    await msalClient.initialize();
+    msalReady = true;
 
-  // Check if already signed in
-  const accounts = msalClient.getAllAccounts();
-  if (accounts.length > 0) {
-    acquireTokenSilent(accounts[0]);
-  } else {
+    // Check if already signed in
+    const accounts = msalClient.getAllAccounts();
+    if (accounts.length > 0) {
+      await acquireTokenSilent(accounts[0]);
+    } else {
+      showLogin();
+    }
+  } catch (err) {
+    statusText.textContent = "Init error: " + err.message;
+    console.error("MSAL init error:", err);
     showLogin();
   }
 });
@@ -83,6 +95,10 @@ function showLogin() {
 }
 
 loginBtn.addEventListener("click", async function () {
+  if (!msalReady) {
+    statusText.textContent = "Still initializing, please wait...";
+    return;
+  }
   loginBtn.disabled = true;
   statusText.textContent = "Signing in...";
   try {
@@ -236,7 +252,7 @@ function renderBreadcrumb() {
     if (i > 0) {
       var sep = document.createElement("span");
       sep.className = "crumb-separator";
-      sep.textContent = "›";
+      sep.textContent = "\u203a";
       breadcrumbEl.appendChild(sep);
     }
     var el = document.createElement("span");
@@ -269,12 +285,12 @@ function renderFolders(folders) {
     var item = document.createElement("div");
     item.className = "folder-item";
     item.innerHTML =
-      '<span class="folder-icon">📁</span>' +
+      '<span class="folder-icon">\uD83D\uDCC1</span>' +
       '<span class="folder-name">' +
       escapeHtml(folder.name) +
       "</span>" +
       (folder.folder.childCount > 0
-        ? '<span class="folder-arrow">›</span>'
+        ? '<span class="folder-arrow">\u203a</span>'
         : "");
 
     item.addEventListener("click", function () {
