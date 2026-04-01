@@ -11,8 +11,8 @@ const CONFIG = {
   siteHostname: "muskratss.sharepoint.com",
   sitePath: "/sites/project-email-register",
   emailRecordsFolder: "Email Records",
-  scopes: ["Files.ReadWrite", "Sites.Read.All"],
-  version: "1.1.0",
+  scopes: ["Files.ReadWrite", "Sites.ReadWrite.All"],
+  version: "1.2.0",
 };
 
 // === MSAL setup ===
