@@ -58,13 +58,14 @@ const doneBtn = document.getElementById("done-btn");
 const retryBtn = document.getElementById("retry-btn");
 
 // === Initialize ===
-Office.onReady(function (info) {
+Office.onReady(async function (info) {
   if (info.host !== Office.HostType.Outlook) {
     statusText.textContent = "This add-in only works in Outlook.";
     return;
   }
 
   msalClient = new msal.PublicClientApplication(msalConfig);
+  await msalClient.initialize();
 
   // Check if already signed in
   const accounts = msalClient.getAllAccounts();
