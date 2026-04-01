@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Email Filer</title>
+  <link rel="stylesheet" href="taskpane.css"/>
+  <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+  <script src="https://alcdn.msauth.net/browser/2.38.3/js/msal-browser.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Email Filer</h1>
+      <p id="status-text">Initializing...</p>
+    </header>
+
+    <!-- Login screen -->
+    <div id="login-section" class="section hidden">
+      <p>Sign in to access your SharePoint folders.</p>
+      <button id="login-btn" class="btn btn-primary">Sign In</button>
+    </div>
+
+    <!-- Folder browser -->
+    <div id="folder-section" class="section hidden">
+      <div id="breadcrumb">
+        <span class="crumb" data-id="root">Email Records</span>
+      </div>
+      <div id="folder-list"></div>
+      <div id="selected-folder" class="hidden">
+        <p>Filing to: <strong id="selected-folder-name"></strong></p>
+        <button id="file-btn" class="btn btn-primary">File Email Here</button>
+      </div>
+    </div>
+
+    <!-- Progress / result -->
+    <div id="result-section" class="section hidden">
+      <div id="progress" class="hidden">
+        <div class="spinner"></div>
+        <p>Filing email...</p>
+      </div>
+      <div id="success" class="hidden">
+        <p class="success-msg">Email filed successfully!</p>
+        <button id="done-btn" class="btn">File Another</button>
+      </div>
+      <div id="error" class="hidden">
+        <p class="error-msg" id="error-text"></p>
+        <button id="retry-btn" class="btn">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="taskpane.js"></script>
+</body>
+</html>

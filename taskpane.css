@@ -1,0 +1,189 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: #323130;
+  background: #faf9f8;
+}
+
+#app {
+  padding: 16px;
+  max-width: 400px;
+}
+
+header {
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0078d4;
+  margin-bottom: 4px;
+}
+
+#status-text {
+  font-size: 12px;
+  color: #605e5c;
+}
+
+.section {
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid #8a8886;
+  border-radius: 4px;
+  background: #fff;
+  color: #323130;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn:hover {
+  background: #f3f2f1;
+}
+
+.btn-primary {
+  background: #0078d4;
+  color: #fff;
+  border-color: #0078d4;
+}
+
+.btn-primary:hover {
+  background: #106ebe;
+}
+
+.btn-primary:disabled {
+  background: #c8c6c4;
+  border-color: #c8c6c4;
+  cursor: not-allowed;
+}
+
+/* Breadcrumb */
+#breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.crumb {
+  color: #0078d4;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.crumb:last-child {
+  color: #323130;
+  cursor: default;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.crumb-separator {
+  color: #a19f9d;
+}
+
+/* Folder list */
+#folder-list {
+  border: 1px solid #edebe9;
+  border-radius: 4px;
+  background: #fff;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.folder-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid #edebe9;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.folder-item:last-child {
+  border-bottom: none;
+}
+
+.folder-item:hover {
+  background: #f3f2f1;
+}
+
+.folder-item.selected {
+  background: #deecf9;
+}
+
+.folder-icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.folder-name {
+  flex: 1;
+}
+
+.folder-arrow {
+  color: #a19f9d;
+  font-size: 12px;
+}
+
+/* Selected folder */
+#selected-folder {
+  margin-top: 12px;
+  padding: 12px;
+  background: #deecf9;
+  border-radius: 4px;
+}
+
+#selected-folder p {
+  margin-bottom: 8px;
+}
+
+/* Progress */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #edebe9;
+  border-top-color: #0078d4;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+#progress, #success, #error {
+  text-align: center;
+  padding: 20px;
+}
+
+.success-msg {
+  color: #107c10;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.error-msg {
+  color: #a4262c;
+  margin-bottom: 12px;
+  word-break: break-word;
+}
